@@ -7,25 +7,26 @@ import java.util.Properties;
 public class ConfigManager {
 	
 	Properties properties = new Properties();
-	String file = "config.properties";
+	String file = "C:\\Users\\ASUS\\AutomationFrameworks\\src\\main\\resources\\config.properties";
 	private String baseUrl;
     private String username;
     private String password;
     private String browser;
+    private String driverPath;
     
-    private ConfigManager() throws IOException {
+    public ConfigManager() throws IOException {
         loadProperties();
     }
     
-     void loadProperties() throws IOException {
-    	FileInputStream fis = new FileInputStream("config.propeerties");
+    public void loadProperties() throws IOException {
+    	FileInputStream fis = new FileInputStream(file);
     	properties.load(fis);
     	// Assign values to private fields
         baseUrl = properties.getProperty("url");
         username = properties.getProperty("username");
         password = properties.getProperty("password");
         browser = properties.getProperty("browser");
-    }
+        driverPath = properties.getProperty("driverPath");    }
     
   // Public getters (read-only access)
      public String getBaseUrl() {
@@ -42,6 +43,10 @@ public class ConfigManager {
 
      public String getBrowser() {
          return browser;
+     }
+     
+     public String getDriverPath() {
+         return driverPath;
      }
     
     
