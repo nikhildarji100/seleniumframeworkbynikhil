@@ -20,7 +20,7 @@
       <version>7.9.0</version>
       <scope>test</scope>
     </dependency>
-
+ 
     <!-- WebDriverManager (automatically handles driver binaries) -->
     <dependency>
       <groupId>io.github.bonigarcia</groupId>
