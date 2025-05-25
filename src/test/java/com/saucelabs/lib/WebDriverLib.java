@@ -12,12 +12,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
+import com.saucelabs.pages.CommonLocators;
 import com.saucelabs.utils.BrowserManagerOptions;
 
 import seleniumframeworksaucelabs.utils.ConfigManager;
 
 public class WebDriverLib {
+	public int GLOBAL_TIMEOUT = 20;
 	private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 	static ConfigManager config = null ;
 	
@@ -135,6 +138,10 @@ public class WebDriverLib {
 	    public static String getTextFieldValue(By by) {
 	        return getDriver().findElement(by).getAttribute("value");
 	    }
+	    
+	    public static String getWebelementText(By by) {
+	    	return getDriver().findElement(by).getText();
+	    }
 
 	    public static void selectDropdownByVisibleText(By by, String text) {
 	        Select select = new Select(getDriver().findElement(by));
@@ -217,6 +224,17 @@ public class WebDriverLib {
 	    public static void quitDriver() {
 	        getDriver().quit();
 	    }
+	    
+	   public void verifyMessage(String expectedMessage){
+	    	String actualMessage = getWebelementText(CommonLocators.errorMessage).trim();
+	    	Assert.assertEquals(actualMessage, expectedMessage, "Required message is not displayed.");
+	    }
+	    
+	    
+	    
+	    
+	    
+	    
 	}
 	
 

@@ -21,14 +21,13 @@ public class ConfigManager {
     public void loadProperties() throws IOException {
     	FileInputStream fis = new FileInputStream(file);
     	properties.load(fis);
-    	// Assign values to private fields
+    	 
         baseUrl = properties.getProperty("url");
         username = properties.getProperty("username");
         password = properties.getProperty("password");
         browser = properties.getProperty("browser");
         driverPath = properties.getProperty("driverPath");    }
     
-  // Public getters (read-only access)
      public String getBaseUrl() {
          return baseUrl;
      }
