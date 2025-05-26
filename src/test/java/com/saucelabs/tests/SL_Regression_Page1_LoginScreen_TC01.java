@@ -19,7 +19,6 @@ import seleniumframeworksaucelabs.utils.ConfigManager;
 
 public class SL_Regression_Page1_LoginScreen_TC01 extends WebDriverLib{
 	WebDriverWait wait;
-	
 	String expectedHeading = "Swag Labs";
 
 	@BeforeClass
@@ -53,8 +52,7 @@ public class SL_Regression_Page1_LoginScreen_TC01 extends WebDriverLib{
 	
 	@Test(priority = 3)
 	public void TC03_Verify_ErrorMessage_WhenUserPerforms_Login_With_Blank_Password() throws IOException {
-		ConfigManager config = new ConfigManager();
-		sendKeysToElement(LoginScreen.userName_Field, config.getUsername());
+		sendKeysToElement(LoginScreen.userName_Field, ConfigManager.getInstance().getUsername());
 		clickOnWebElement(LoginScreen.login_Button);
 		wait.until(ExpectedConditions.elementToBeClickable(CommonLocators.errorMessage_CloseButton));
 		verifyMessage(CommonLocators.expectedMessages.passwordIsRequired);
@@ -62,10 +60,9 @@ public class SL_Regression_Page1_LoginScreen_TC01 extends WebDriverLib{
 	
 	@Test(priority = 4)
 	public void TC04_Verify_ErrorMessage_WhenUserPerforms_Login_With_Invalid_Username() throws IOException {
-		ConfigManager config = new ConfigManager();
 		refreshPage();
 		sendKeysToElement(LoginScreen.userName_Field, CommonLocators.invalidValue);
-		sendKeysToElement(LoginScreen.password_Field, config.getPassword());
+		sendKeysToElement(LoginScreen.password_Field, ConfigManager.getInstance().getPassword());
 		clickOnWebElement(LoginScreen.login_Button);
 		wait.until(ExpectedConditions.elementToBeClickable(CommonLocators.errorMessage_CloseButton));
 		verifyMessage(CommonLocators.expectedMessages.usernameAndpasswordDoNotMatchAnyUser);
@@ -73,9 +70,8 @@ public class SL_Regression_Page1_LoginScreen_TC01 extends WebDriverLib{
 	
 	@Test(priority = 5)
 	public void TC05_Verify_ErrorMessage_WhenUserPerforms_Login_With_Invalid_Password() throws IOException {
-		ConfigManager config = new ConfigManager();
 		refreshPage();
-		sendKeysToElement(LoginScreen.userName_Field, config.getUsername());
+		sendKeysToElement(LoginScreen.userName_Field, ConfigManager.getInstance().getUsername());
 		sendKeysToElement(LoginScreen.password_Field, CommonLocators.invalidValue);
 		clickOnWebElement(LoginScreen.login_Button);
 		wait.until(ExpectedConditions.elementToBeClickable(CommonLocators.errorMessage_CloseButton));
@@ -84,20 +80,13 @@ public class SL_Regression_Page1_LoginScreen_TC01 extends WebDriverLib{
 	
 	@Test(priority = 6)
 	public void TC06_Verify_Succesful_Login_With_Valid_Credentials() throws IOException, InterruptedException {
-		ConfigManager config = new ConfigManager();
 		refreshPage();
-		sendKeysToElement(LoginScreen.userName_Field, config.getUsername());
-		sendKeysToElement(LoginScreen.password_Field, config.getPassword());
+		sendKeysToElement(LoginScreen.userName_Field, ConfigManager.getInstance().getUsername());
+		sendKeysToElement(LoginScreen.password_Field, ConfigManager.getInstance().getPassword());
 		clickOnWebElement(LoginScreen.login_Button);
 		Thread.sleep(1000);
 		Assert.assertFalse(isElementDisplayed(CommonLocators.errorMessage_CloseButton), 
 		"Error message is not expected.");
 	}
-	
-	
-	
-	
-	
-	
 	
 }

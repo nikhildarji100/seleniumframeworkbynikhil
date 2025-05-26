@@ -13,8 +13,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import com.saucelabs.pages.CommonLocators;
+import com.saucelabs.reporting.ExtentReportManager;
 import com.saucelabs.utils.BrowserManagerOptions;
 
 import seleniumframeworksaucelabs.utils.ConfigManager;
@@ -22,12 +27,10 @@ import seleniumframeworksaucelabs.utils.ConfigManager;
 public class WebDriverLib {
 	public int GLOBAL_TIMEOUT = 20;
 	private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-	static ConfigManager config = null ;
 	
 	public static void intiDriver() throws IOException {
-		config = new ConfigManager();
-		String browser = config.getBrowser();
-		String path = config.getDriverPath();
+		String browser = ConfigManager.getInstance().getBrowser();
+		String path = ConfigManager.getInstance().getDriverPath();
 		switch (browser) {
         case "chrome":
         	System.setProperty("webdriver.chrome.driver", path);
@@ -46,10 +49,10 @@ public class WebDriverLib {
 	 public static WebDriver getDriver() {
 	        return driver.get();
 	 }
-	
+		
 	 public static void launchApplication() throws IOException, InterruptedException {
 		 intiDriver();
-		 String url = config.getBaseUrl();
+		 String url = ConfigManager.getInstance().getBaseUrl();
 		 getDriver().get(url);
 	}
 	 
