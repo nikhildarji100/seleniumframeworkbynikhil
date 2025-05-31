@@ -14,13 +14,14 @@ import org.testng.annotations.Test;
 import com.saucelabs.lib.WebDriverLib;
 import com.saucelabs.pages.CommonLocators;
 import com.saucelabs.pages.LoginScreen;
+import com.saucelabs.utils.Excel_Utils;
 
 import seleniumframeworksaucelabs.utils.ConfigManager;
 
 public class SL_Regression_Page1_LoginScreen_TC01 extends WebDriverLib{
 	WebDriverWait wait;
 	String expectedHeading = "Swag Labs";
-
+	
 	@BeforeClass
 	public void beforeClass() throws IOException, InterruptedException {
 		launchApplication();
@@ -34,12 +35,12 @@ public class SL_Regression_Page1_LoginScreen_TC01 extends WebDriverLib{
 	}
 	
 	@Test(priority = 1)
-	public void TC01_Verify_LoginScreen_Heading() {
+	public void TC01_Verify_LoginScreen_Heading() throws IOException {
 		Assert.assertEquals(getWebelementText(LoginScreen.heading), expectedHeading, "Incorrect heading is displayed.");
 	}
 	
 	@Test(priority = 2)
-	public void TC02_Verify_ErrorMessage_WhenUser_Performs_Login_With_BlankCredentials() throws InterruptedException {
+	public void TC02_Verify_ErrorMessage_WhenUser_Performs_Login_With_BlankCredentials() throws InterruptedException, IOException {
 		wait = new WebDriverWait(getDriver(), Duration.ofSeconds(GLOBAL_TIMEOUT));
 		clickOnWebElement(LoginScreen.login_Button);
 		wait.until(ExpectedConditions.elementToBeClickable(CommonLocators.errorMessage_CloseButton));
@@ -87,6 +88,7 @@ public class SL_Regression_Page1_LoginScreen_TC01 extends WebDriverLib{
 		Thread.sleep(1000);
 		Assert.assertFalse(isElementDisplayed(CommonLocators.errorMessage_CloseButton), 
 		"Error message is not expected.");
+		
 	}
 	
 }
