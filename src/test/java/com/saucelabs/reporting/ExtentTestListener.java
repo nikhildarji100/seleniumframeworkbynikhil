@@ -1,5 +1,9 @@
 package com.saucelabs.reporting;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -7,6 +11,7 @@ import org.testng.ITestResult;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import com.saucelabs.utils.ScreenshotUtil;
 
 public class ExtentTestListener implements ITestListener{
 	private static ExtentReports extent = ExtentReportManager.getInstance();
@@ -26,7 +31,14 @@ public class ExtentTestListener implements ITestListener{
     @Override
     public void onTestFailure(ITestResult result) {
         test.get().log(Status.FAIL, "Test Failed: " + result.getThrowable().getMessage());
-        // Add screenshot logic here if needed
+        
+        try {
+            String screenshotPath = ScreenshotUtil.captureScreenshot();
+            test.get().addScreenCaptureFromPath(screenshotPath, "Failure Screenshot");
+        } catch (IOException e) {
+            test.get().log(Status.WARNING, "Failed to attach screenshot: " + e.getMessage());
+        }
+        
     }
 
     @Override
