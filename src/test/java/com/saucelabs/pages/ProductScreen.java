@@ -9,6 +9,6 @@ public class ProductScreen {
 	public static final By item_price = By.cssSelector(".inventory_item_price");
 	public static final By productSort_Dropdown = By.cssSelector(".product_sort_container");
 	public static final By productsPage_heading = By.cssSelector("span[data-test='title']");
-	public static final By cart_Link = By.cssSelector(".shopping_cart_link");
+	
 	public static final By cart_Badge = By.cssSelector(".shopping_cart_badge");
 }

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Suite">
+<suite name="Suite"  parallel="classes" thread-count="3">
 	<listeners>
     <listener class-name="com.saucelabs.reporting.ExtentTestListener"/>
 </listeners>
   <test thread-count="5" name="Test">
     <classes>
+      <class name="com.saucelabs.tests.SL_Regression_Page3_EndToEndFlow_TC03"/>
+      <class name="com.saucelabs.tests.SL_Regression_Page2_ProductsScreen_TC02"/>
       <class name="com.saucelabs.tests.SL_Regression_Page1_LoginScreen_TC01"/>
     </classes>
   </test> <!-- Test -->
