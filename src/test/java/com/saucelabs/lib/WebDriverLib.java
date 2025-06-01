@@ -1,6 +1,7 @@
 package com.saucelabs.lib;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -11,15 +12,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
 import com.saucelabs.pages.CommonLocators;
-import com.saucelabs.reporting.ExtentReportManager;
+import com.saucelabs.pages.LoginScreen;
 import com.saucelabs.utils.BrowserManagerOptions;
 
 import seleniumframeworksaucelabs.utils.ConfigManager;
@@ -27,6 +26,7 @@ import seleniumframeworksaucelabs.utils.ConfigManager;
 public class WebDriverLib {
 	public int GLOBAL_TIMEOUT = 20;
 	private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+	WebDriverWait wait = null ;
 	
 	public static void intiDriver() throws IOException {
 		String browser = ConfigManager.getInstance().getBrowser();
@@ -50,10 +50,14 @@ public class WebDriverLib {
 	        return driver.get();
 	 }
 		
-	 public static void launchApplication() throws IOException, InterruptedException {
+	 public static void launchApplication() {
+		 try {
 		 intiDriver();
 		 String url = ConfigManager.getInstance().getBaseUrl();
-		 getDriver().get(url);
+		 getDriver().get(url);}
+		 catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	 
 	 public static void clickOnWebElement(By by) {
@@ -67,13 +71,17 @@ public class WebDriverLib {
 		}
 	 
 	 public static void sendKeysToElement(By by, String text) {
-		    try {
+		 try {
 		        WebElement element = getDriver().findElement(by);
-		        element.clear();
-		        element.sendKeys(text);
-		        System.out.println("Entered text: " + text + " into element: " + by.toString());
+		        try {
+		            element.clear();
+		            element.sendKeys(text);
+		        } catch (Exception e) {
+		            // Fallback using JavaScript
+		            JavascriptExecutor js = (JavascriptExecutor) getDriver();
+		            js.executeScript("arguments[0].value='" + text + "';", element);
+		        }
 		    } catch (Exception e) {
-		        System.out.println("Failed to enter text in element: " + by.toString());
 		        e.printStackTrace();
 		        throw new RuntimeException("SendKeys failed", e);
 		    }
@@ -233,21 +241,12 @@ public class WebDriverLib {
 	    	Assert.assertEquals(actualMessage, expectedMessage, "Required message is not displayed.");
 	    }
 	    
-	    
-	    
-	    
-	    
+	   public void application_Login() {
+		   	wait = new WebDriverWait(getDriver(), Duration.ofSeconds(GLOBAL_TIMEOUT));
+		   	launchApplication();
+		   	sendKeysToElement(LoginScreen.userName_Field, ConfigManager.getInstance().getUsername());
+			sendKeysToElement(LoginScreen.password_Field, ConfigManager.getInstance().getPassword());
+			clickOnWebElement(LoginScreen.login_Button);
+	   }
 	    
 	}
-	
-
-
-
-
-
-
-	 
-	 
-	 
-	 
-

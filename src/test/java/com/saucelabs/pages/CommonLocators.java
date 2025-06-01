@@ -15,6 +15,10 @@ public class CommonLocators {
 	}
 	
 	public static final String invalidValue = "@#!Invalid@";
+	public static final By cart_Link = By.cssSelector(".shopping_cart_link");
+	
+	public static final By checkout_Button 		   = By.id("checkout");
+	public static final By continueShopping_Button = By.id("continue-shopping");
 	
 	
 }

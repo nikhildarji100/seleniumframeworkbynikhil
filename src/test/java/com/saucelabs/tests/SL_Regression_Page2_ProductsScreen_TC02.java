@@ -3,7 +3,6 @@ package com.saucelabs.tests;
 import java.io.IOException;
 import java.time.Duration;
 
-import org.apache.commons.math3.stat.descriptive.summary.Product;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -59,6 +58,8 @@ public class SL_Regression_Page2_ProductsScreen_TC02 extends WebDriverLib{
 		Assert.assertTrue(isElementDisplayed(ProductScreen.remove_button), 
 		"Remove button is not displayed after clicking on Aa To Cart button.");
 	}
+	
+	
 	
 	
 	
